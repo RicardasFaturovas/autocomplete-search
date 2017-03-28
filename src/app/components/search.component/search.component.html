@@ -1,0 +1,59 @@
+<div *ngIf="!token">
+  <div class="row">
+    <div class="col-md-12">
+      <form class="well">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Enter email.." [(ngModel)]="email" name="email">
+          <input type="text" class="form-control" placeholder="Enter password.." [(ngModel)]="password" name="password">
+          <button class="btn btn-primary" (click)="login()">Login</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="token">
+  <h3>Logged in as {{email}}</h3>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <form class="well">
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder="Enter Project name.." [(ngModel)]="project" name="project" (focus)="getProjectNames()" (keyup)="filter()">
+      </div>
+
+      <div class="suggestions" *ngIf="filteredNames.length > 0">
+        <ul *ngFor="let name of filteredNames">
+          <li >
+            <a (click)="select(name)">{{name}}</a>
+          </li>
+        </ul>
+      </div>
+
+      <button  class="btn btn-primary" (click)="searchProject()">Search Projects</button>
+    </form>
+  </div>
+</div>
+
+<div *ngIf="projects">
+  <div *ngFor="let project of projects">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">{{project.name}}</h3>
+      </div>
+      <div class="panel-body">
+        <h4>Tasks:</h4>
+        <div *ngFor="let task of project.tasks">
+          <div class="row">
+            <div class="col-md-9">
+              <h4>Task: {{task.name}}</h4>
+              <p>Description: {{task.description}}</p>
+            </div>
+          </div>
+          <hr>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
